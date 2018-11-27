@@ -1,0 +1,49 @@
+body {
+	font-family: "DIN Web", "Hiragino Sans GB", STXihei, sans-serif;
+	color: rgb(33, 206, 153);
+	margin: 0px;
+}
+
+h1 {
+	margin: 15px;
+}
+
+h2 {
+
+}
+
+#topBanner {
+	display: flex;
+	justify-content: space-between;
+	background-color: lightgrey;
+}
+
+#logInOut {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 15px;
+	cursor: pointer;
+	color: rgb(33, 206, 153);
+}
+
+#userDiv {
+	display: flex;
+}
+
+#signIn {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	display: none;
+}
+
+#mainBody {
+	display: flex;
+	justify-content: space-around;
+	margin: 15px;
+}
+
+.aStock {
+	background: lightgrey;
+}
