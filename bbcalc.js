@@ -11,11 +11,27 @@
 
 (function() {
 
+	let currentProfile = null;
 	// Sets up event listeners for both buttons
 	window.onload = function () {
 
-		getStockDiv("AAPL", "BBStocks");
-		
+		//getStockDiv("AAPL", "BBStocks");
+
+
+		//toggle login window
+		let loginDisplay = false;
+		let loginButton = document.getElementById("logInOut").onclick = function(){
+			if(loginDisplay){
+				let login = document.getElementById("signIn").style.display = "none";
+				loginDisplay = false;
+
+			} else{
+				let login = document.getElementById("signIn").style.display = "block";
+				loginDisplay = true;
+			}
+		};
+
+		let loginSubmit = document.getElementById("submitUserInfo").onclick = login;
 	}
 
 	function getStockDiv(ticker, appendTo) {
@@ -31,11 +47,11 @@
 
 			let stockDiv = document.createElement("div");
 			stockDiv.classList.add("aStock");
-			
+
 			let title = document.createElement("h3");
 			title.innerHTML = ticker;
 			stockDiv.appendChild(title);
-			
+
 			let date1 = getValidDate(false, stockData);
 			let date2 = getValidDate(true, stockData);
 
@@ -110,7 +126,7 @@
 		let dd = d.getDate();
 
 		let date = yyyy.toString() + "-";
-		
+
 		if (mm < 10) {
 			date += "0";
 		}
@@ -133,15 +149,96 @@
 
 	// normal check status function
 	function checkStatus(response) {
-    	if (response.status >= 200 && response.status < 300) { 
+    	if (response.status >= 200 && response.status < 300) {
         	return response.text();
     	} else if (response.status == 404) {
-    		return Promise.reject(new Error("Page data not found")); 
+    		return Promise.reject(new Error("Page data not found"));
     	} else if (response.status == 400) {
     		return Promise.reject(new Error("Error, invalid request"));
     	} else {
-        	return Promise.reject(new Error(response.status+": "+response.statusText)); 
-    	} 
+        	return Promise.reject(new Error(response.status+": "+response.statusText));
+    	}
 	}
+
+	function createProfile(username, password, stocks){
+		stocks = JSON.stringify(stocks);
+		const message = {profile: username + ":::" + password + ":::" + stocks + '\n'};
+
+
+		const fetchOptions = {
+			method : 'POST',
+			headers : {
+				'Accept': 'application/json',
+				'Content-Type' : 'application/json'
+			},
+
+			body : JSON.stringify(message)
+		};
+
+
+		let url = "http://localhost:3000/";
+		fetch(url, fetchOptions)
+			.then(checkStatus)
+			.then(function(){
+				login();
+			})
+			.catch(function(error) {
+				 alert(error);
+			});
+	}
+
+	function login(){
+		let url = "http://localhost:3000/";
+		let username = document.getElementById("userText").value;
+		let password = document.getElementById("passwordText").value;
+
+		fetch(url, {method: "GET"})
+		   .then(checkStatus)
+		   .then(function(responseText) {
+			   //console.log(responseText);
+				let data = JSON.parse(responseText);
+
+				let flag = "new";
+				for (let profile of data.profiles){
+					//console.log(profile.name);
+					//console.log(profile.password);
+					if (profile.name == username && profile.password == password){
+						flag = "right";
+						currentProfile = profile;
+						if (currentProfile != null){
+							for (let i in currentProfile.stocks){
+								let stock = String(currentProfile.stocks[i]);
+								getStockDiv(stock, "searchAndPort");
+							}
+						}
+						break;
+
+					}
+					else if (profile.name == username && profile.password != password){
+						flag = "wrong"
+						break;
+					}
+					else if (profile.name != username && profile.password != password){
+						flag = "new";
+					}
+				}
+				//console.log(flag);
+				if(flag == "wrong"){
+					alert("Wrong password");
+				}
+				else if (flag == "new"){
+					alert("Will create new profile for " + username);
+					let stocks = [];
+					createProfile(username, password, stocks);
+				}
+			})
+		   .catch(function(error) {
+			   alert(error);
+		   })
+
+	}
+
+
+
 
 }) ();
