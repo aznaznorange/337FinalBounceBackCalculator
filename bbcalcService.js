@@ -4,20 +4,22 @@
  *
  * Created On: 11/27/18
  * Author: David Wang & Anthony Pietrofeso
- * Description: GET returns list of user profiles. Post adds profile to list of profiles, or updares the stocks in that profile
+ * Description: GET returns list of user profiles.
+ * Post adds profile to list of profiles, or updates the stocks in that profile.
  */
 
 "use strict";
 
-let FILE = "profiles.txt";
-const express = require("express");
-const app = express();
-let fs = require("fs");
-
-const  bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
-
 (function() {
+	const FILE = "profiles.txt";
+
+	const express = require("express");
+	const app = express();
+	let fs = require("fs");
+
+	const  bodyParser = require('body-parser');
+	const jsonParser = bodyParser.json();
+
 	app.use(function(req, res, next) {
  	    res.header("Access-Control-Allow-Origin", "*");
  	    res.header("Access-Control-Allow-Headers",
@@ -25,6 +27,7 @@ const jsonParser = bodyParser.json();
  	  next();
  	});
 
+	// Post request updates stocks or adds profile.
 	app.post('/', jsonParser, function (req, res) {
 		let userPassStock = req.body.profile;
 		let userPassStocklis = userPassStock.split(":::");
@@ -52,7 +55,7 @@ const jsonParser = bodyParser.json();
 			let splitline = line.split(":::");
 
 			if (splitline[0] == user && splitline[1] == password){
-				console.log("thinks samee user");
+				console.log("thinks same user");
 				continue;
 			}
 
@@ -78,7 +81,7 @@ const jsonParser = bodyParser.json();
 	});
 
 
-
+	// Returns ALL profiles
 	app.get('/', function (req, res) {
 	    let fileContent = fs.readFileSync(FILE, 'utf8', function(err) {
 	    	if(err) {
@@ -88,9 +91,6 @@ const jsonParser = bodyParser.json();
 	    	}
 	        res.status(200);
 	    });
-
-
-
 
 	    fileContent = fileContent.split('\n');
 

@@ -1,0 +1,21 @@
+<form onsubmit="doStuff(); return false;">
+	<input type="submit" onclick="saveStateBuy();" name="buy" value="buy">
+	<input type="submit" onclick="saveStateSell();" name="sell" value="sell">
+	<input pattern="^[0-9]+$" title="Positive integer amount">
+</form>
+
+<script>
+	let type = "buy";
+	function doStuff() {
+		console.log("passed");
+		console.log(type);
+	}
+
+	function saveStateBuy() {
+		type = "buy";
+	}
+
+	function saveStateSell() {
+		type = "sell";
+	}
+</script>
