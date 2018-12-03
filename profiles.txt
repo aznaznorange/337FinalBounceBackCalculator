@@ -1,4 +1,4 @@
 new:::acc1:::[{"ticker":"AAPL","quantity":1,"open":180.29,"close":179.55,"change":0.4104498308280996},{"ticker":"MXIM","quantity":1,"open":55.22,"close":55.34,"change":-0.2173125679101857}]
 hey:::there1:::[{"ticker":"AMD","quantity":1,"open":21.3,"close":21.43,"change":-0.6103286384976478}]
-dummy:::dummy1:::[{"ticker":"AAPL","quantity":5,"open":180.29,"close":179.55,"change":0.4104498308280996},{"ticker":"AMD","quantity":3,"open":21.3,"close":21.43,"change":-0.6103286384976478},{"ticker":"CMCSA","quantity":2,"open":39.09,"close":39.01,"change":0.20465592223076334}]
+dummy:::dummy1:::[{"ticker":"AAPL","quantity":5,"open":180.29,"close":179.55,"change":0.4104498308280996},{"ticker":"AMD","quantity":3,"open":21.3,"close":21.43,"change":-0.6103286384976478},{"ticker":"CMCSA","quantity":2,"open":39.09,"close":39.01,"change":0.20465592223076334},{"ticker":"AAPL","quantity":1,"open":184.46,"close":178.58,"change":3.1876829664967987}]
 
